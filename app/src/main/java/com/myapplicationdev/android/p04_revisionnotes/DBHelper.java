@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    //TODO Define the Database properties
+    //TODO Define the Database properties | by Myron
     private static final String DATABASE_NAME = "Star";
     private static final int DATABASE_VERSION = 1;
 
@@ -27,9 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //TODO CREATE TABLE Note
+        //TODO CREATE TABLE Note | by Myron
 
-        // By Myron
         String createTableSql = "CREATE TABLE " + TABLE_NOTE + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NOTE_CONTENT + " TEXT,"
@@ -44,7 +43,6 @@ public class DBHelper extends SQLiteOpenHelper {
         //	`noteContent`	TEXT,
         //	`stars`	INTEGER
         //);
-
     }
 
     @Override

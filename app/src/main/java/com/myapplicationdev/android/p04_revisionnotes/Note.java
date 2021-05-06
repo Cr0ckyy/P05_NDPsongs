@@ -1,9 +1,9 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
+// Todo: POJO Object
+// Todo: Done by Zuhaili
 public class Note {
 
-	//What's here?
-    // Zuhaili
 
     private int id;
     private String noteContent;

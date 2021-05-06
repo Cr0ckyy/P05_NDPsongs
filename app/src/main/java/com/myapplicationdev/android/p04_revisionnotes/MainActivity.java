@@ -8,10 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,30 +42,35 @@ public class MainActivity extends AppCompatActivity {
                     stars = 1;
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165317) {
                     stars = 2;
+
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165318) {
                     stars = 3;
+
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165319) {
                     stars = 4;
+
                 } else {
                     stars = 5;
-                }
 
-                String content = etNote.getText().toString();
-                ArrayList<Note> contents = db.getAllNotes();
-                Boolean found = false;
-                for (int i = 0; i < contents.size(); i++) {
-                    Note currentNote = contents.get(i);
-                    if (currentNote.getNoteContent().equalsIgnoreCase(content)) {
-                        found = true;
-                        break;
-                    }
                 }
+                Log.i("Myron", rg.getCheckedRadioButtonId() + "");
 
-                if (!found) {
-                    db.insertNote(content, stars);
+                // Todo: Prevent user from submitting empty value in edittext
+                // Todo: Done by Zuhaili
+                String textNote = "";
+                textNote += etNote.getText().toString();
+
+                if(etNote.getText().toString().trim().length() != 0) {
+                    db.insertNote(textNote, stars);
+                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+//                    textNote = etNote.toString();
                 } else {
-                    Log.i("Myron", "Noped");
+                    Toast.makeText(MainActivity.this, "Please do not leave the notes empty!", Toast.LENGTH_LONG).show();
                 }
+
+                // Insert a task
+//                Log.i("Myron", stars + "");
+
 
                 db.close();
             }

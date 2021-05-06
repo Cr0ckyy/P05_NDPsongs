@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-// Todo: Done by Myron
+// Todo: MainActivity | by Myron
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -38,48 +38,27 @@ public class MainActivity extends AppCompatActivity {
                 // Create the DBHelper object, passing in the
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
-
-                int stars = 0;
-                if ((rg.getCheckedRadioButtonId()) == 2131165316) {
-                    stars = 1;
-                } else if ((rg.getCheckedRadioButtonId()) == 2131165317) {
-                    stars = 2;
-
-                } else if ((rg.getCheckedRadioButtonId()) == 2131165318) {
-                    stars = 3;
-
-                } else if ((rg.getCheckedRadioButtonId()) == 2131165319) {
-                    stars = 4;
-
-                } else {
-                    stars = 5;
-
-                }
-                Log.i("Myron", rg.getCheckedRadioButtonId() + "");
-
+                int stars = (rg.getCheckedRadioButtonId()) - 2131165315;
                 Boolean canInsert = true;
 
-                // Todo: Done by Shufang
+                // Todo: Done by Zuhaili, simplified up by Shufang
                 // Todo: Prevent the user from entering an empty value in EditText.
-                //counting of editTextNote
+                // counting of editTextNote
                 int editTextNoteCount = etNote.getText().toString().trim().length();
-
-
                 if (editTextNoteCount == 0) {
                     canInsert = false;
-                    Toast.makeText(MainActivity.this, "The note has not been inserted; the field is empty.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Not inserted; field is empty.", Toast.LENGTH_SHORT).show();
                 }
 
                 // Todo: Check if content is a duplicate | By Myron
                 String content = etNote.getText().toString();
-                ArrayList<Note> contents = db.getAllNotes();
-
-
-                for (int i = 0; i < contents.size(); i++) {
-                    Note currentNote = contents.get(i);
-                    if (currentNote.getNoteContent().equalsIgnoreCase(content)) {
-                        Toast.makeText(MainActivity.this, "Note not inserted; already exists", Toast.LENGTH_SHORT).show();
+                ArrayList<Note> notes = db.getAllNotes();
+                for (int i = 0; i < notes.size(); i++) {
+                    Note currentNote = notes.get(i);
+                    String currentContent = currentNote.getNoteContent();
+                    if (currentContent.equalsIgnoreCase(content)) {
                         canInsert = false;
+                        Toast.makeText(MainActivity.this, "Not inserted; already exists", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -88,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                     db.insertNote(content, stars);
                     Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
                 }
-
                 db.close();
             }
         });

@@ -57,18 +57,30 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.i("Myron", rg.getCheckedRadioButtonId() + "");
 
+
+                // Todo: Prevent the user from submitting empty note in the editText.
+                // Todo: Done by Zuhaili
+                String textnode = "";
+                textnode += etNote.getText().toString();
+
+                if(etNote.getText().toString().trim().length() != 0){
+                    db.insertNote(textnode, stars);
+                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Please do insert note next time!", Toast.LENGTH_SHORT).show();
+                }
                 Boolean canInsert = true;
 
                 // Todo: Done by Shufang
                 // Todo: Prevent the user from entering an empty value in EditText.
                 //counting of editTextNote
-                int editTextNoteCount = etNote.getText().toString().trim().length();
-
-
-                if (editTextNoteCount == 0) {
-                    canInsert = false;
-                    Toast.makeText(MainActivity.this, "The note has not been inserted; the field is empty.", Toast.LENGTH_SHORT).show();
-                }
+//                int editTextNoteCount = etNote.getText().toString().trim().length();
+//
+//
+//                if (editTextNoteCount == 0) {
+//                    canInsert = false;
+//                    Toast.makeText(MainActivity.this, "The note has not been inserted; the field is empty.", Toast.LENGTH_SHORT).show();
+//                }
 
                 // Todo: Check if content is a duplicate | By Myron
                 String content = etNote.getText().toString();

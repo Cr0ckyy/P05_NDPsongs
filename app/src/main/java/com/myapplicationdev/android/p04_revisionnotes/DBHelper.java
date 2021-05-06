@@ -54,6 +54,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	//TODO: Done By Jun Kai
+	//TODO: insertNote
 	public void insertNote(String noteContent, int stars) {
 		//TODO insert the data into the database
 		// Get an instance of the database for writing
@@ -71,6 +73,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	//Todo: Done By Jun Kai
+	// Todo: getAllnotes ArrayList
 	public ArrayList<Note> getAllNotes() {
 		//TODO return records in Java objects
 		ArrayList<Note> notes = new ArrayList<Note>();
@@ -96,6 +100,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		return notes;
 	}
 
+	//TODO: Done By Jun Kai
+	//TODO: getNoteContent ArrayList
     public ArrayList<String> getNoteContent() {
         //TODO return records in Strings
 

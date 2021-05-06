@@ -19,23 +19,11 @@ public class Note {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNoteContent() {
         return noteContent;
     }
 
-    public void setNoteContent(String noteContent) {
-        this.noteContent = noteContent;
-    }
-
     public int getStars() {
         return stars;
-    }
-
-    public void setStars(int stars) {
-        this.stars = stars;
     }
 }

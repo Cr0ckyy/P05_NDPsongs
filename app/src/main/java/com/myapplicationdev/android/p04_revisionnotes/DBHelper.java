@@ -13,9 +13,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	//TODO Define the Database properties
 	private static final String DATABASE_NAME = "";
-	private static final int DATABASE_VERSION = ;
+	private static final int DATABASE_VERSION = 1;
 
-	private static final String TABLE_TASK = "notes";
+	private static final String TABLE_NOTE = "Note";
 	private static final String COLUMN_ID = "_id";
 	private static final String COLUMN_NOTE_CONTENT = "noteContent";
 	private static final String COLUMN_STARS = "stars";
@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		//TODO CREATE TABLE Note
 
-		String createTableSql = "CREATE TABLE " + TABLE_TASK +  "("
+		String createTableSql = "CREATE TABLE " + TABLE_NOTE +  "("
 				+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ COLUMN_NOTE_CONTENT + " TEXT,"
 				+ COLUMN_STARS + " INTEGER )";
@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		Log.i("info" ,"created tables");
 
 //	The SQL Statement:
-//		CREATE TABLE `` (
+//		CREATE TABLE `Note` (
 //	`_id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 //	`noteContent`	TEXT,
 //	`stars`	INTEGER

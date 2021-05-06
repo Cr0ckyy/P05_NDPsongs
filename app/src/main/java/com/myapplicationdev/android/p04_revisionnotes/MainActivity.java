@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,10 +55,23 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.i("Myron", rg.getCheckedRadioButtonId() + "");
 
+                // Todo: Prevent user from submitting empty value in edittext
+                // Todo: Done by Zuhaili
+                String textNote = "";
+                textNote += etNote.getText().toString();
+
+                if(etNote.getText().toString().trim().length() != 0) {
+                    db.insertNote(textNote, stars);
+                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+//                    textNote = etNote.toString();
+                } else {
+                    Toast.makeText(MainActivity.this, "Please do not leave the notes empty!", Toast.LENGTH_LONG).show();
+                }
+
                 // Insert a task
 //                Log.i("Myron", stars + "");
 
-                db.insertNote("Myron", stars);
+
                 db.close();
             }
         });

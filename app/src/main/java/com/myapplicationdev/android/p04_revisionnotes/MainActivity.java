@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+// Todo: Done by Myron
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -30,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
         btnShowList = findViewById(R.id.buttonShowList);
         etNote = findViewById(R.id.editTextNote);
         rg = findViewById(R.id.radioGroupStars);
-//        rb5 = findViewById(R.id.radio5);
 
-        btnInsert.setOnClickListener(new View.OnClickListener(){
+        btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create the DBHelper object, passing in the
@@ -59,19 +59,22 @@ public class MainActivity extends AppCompatActivity {
 
                 Boolean canInsert = true;
 
-                // Todo: Prevent user from submitting empty value in edittext
-                // Todo: Done by Zuhaili
-                String textNote = "";
-                textNote += etNote.getText().toString();
+                // Todo: Done by Shufang
+                // Todo: Prevent the user from entering an empty value in EditText.
+                //counting of editTextNote
+                int editTextNoteCount = etNote.getText().toString().trim().length();
 
-                if(etNote.getText().toString().trim().length() == 0) {
+
+                if (editTextNoteCount == 0) {
                     canInsert = false;
-                    Toast.makeText(MainActivity.this, "Note not inserted; field is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "The note has not been inserted; the field is empty.", Toast.LENGTH_SHORT).show();
                 }
 
                 // Todo: Check if content is a duplicate | By Myron
                 String content = etNote.getText().toString();
                 ArrayList<Note> contents = db.getAllNotes();
+
+
                 for (int i = 0; i < contents.size(); i++) {
                     Note currentNote = contents.get(i);
                     if (currentNote.getNoteContent().equalsIgnoreCase(content)) {
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnShowList.setOnClickListener(new View.OnClickListener(){
+        btnShowList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

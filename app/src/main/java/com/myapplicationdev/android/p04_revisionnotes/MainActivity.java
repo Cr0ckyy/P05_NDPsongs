@@ -1,5 +1,6 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         rb2 = findViewById(R.id.radio2);
         rb3 = findViewById(R.id.radio3);
         rb4 = findViewById(R.id.radio4);
-        rb5 = findViewById(R.id.radio5);
+//        rb5 = findViewById(R.id.radio5);
 
         btnInsert.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 // activity's Context
                 DBHelper db = new DBHelper(MainActivity.this);
 
-                int stars = 0;
+                int stars;
                 if (rb1.isSelected()) {
                     stars = 1;
                 } else if (rb2.isSelected()) {
@@ -62,13 +63,9 @@ public class MainActivity extends AppCompatActivity {
         btnShowList.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // Create the DBHelper object, passing in the
-                // activity's Context
-                DBHelper db = new DBHelper(MainActivity.this);
 
-                // Insert a task
-//                db.insertNote();
-//                db.close();
+                Intent i = new Intent(MainActivity.this, SecondActivity.class);
+                MainActivity.this.startActivity(i);
             }
         });
 

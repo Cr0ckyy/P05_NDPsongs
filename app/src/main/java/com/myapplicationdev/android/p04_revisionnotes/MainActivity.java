@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -41,23 +43,31 @@ public class MainActivity extends AppCompatActivity {
                     stars = 1;
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165317) {
                     stars = 2;
-
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165318) {
                     stars = 3;
-
                 } else if ((rg.getCheckedRadioButtonId()) == 2131165319) {
                     stars = 4;
-
                 } else {
                     stars = 5;
-
                 }
-                Log.i("Myron", rg.getCheckedRadioButtonId() + "");
 
-                // Insert a task
-//                Log.i("Myron", stars + "");
+                String content = etNote.getText().toString();
+                ArrayList<Note> contents = db.getAllNotes();
+                Boolean found = false;
+                for (int i = 0; i < contents.size(); i++) {
+                    Note currentNote = contents.get(i);
+                    if (currentNote.getNoteContent().equalsIgnoreCase(content)) {
+                        found = true;
+                        break;
+                    }
+                }
 
-                db.insertNote("Myron", stars);
+                if (!found) {
+                    db.insertNote(content, stars);
+                } else {
+                    Log.i("Myron", "Noped");
+                }
+
                 db.close();
             }
         });

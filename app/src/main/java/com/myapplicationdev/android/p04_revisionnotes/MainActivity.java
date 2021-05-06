@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -55,22 +57,34 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.i("Myron", rg.getCheckedRadioButtonId() + "");
 
+                Boolean canInsert = true;
+
                 // Todo: Prevent user from submitting empty value in edittext
                 // Todo: Done by Zuhaili
                 String textNote = "";
                 textNote += etNote.getText().toString();
 
-                if(etNote.getText().toString().trim().length() != 0) {
-                    db.insertNote(textNote, stars);
-                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
-//                    textNote = etNote.toString();
-                } else {
-                    Toast.makeText(MainActivity.this, "Please do not leave the notes empty!", Toast.LENGTH_LONG).show();
+                if(etNote.getText().toString().trim().length() == 0) {
+                    canInsert = false;
+                    Toast.makeText(MainActivity.this, "Note not inserted; field is empty", Toast.LENGTH_SHORT).show();
                 }
 
-                // Insert a task
-//                Log.i("Myron", stars + "");
+                // Todo: Check if content is a duplicate | By Myron
+                String content = etNote.getText().toString();
+                ArrayList<Note> contents = db.getAllNotes();
+                for (int i = 0; i < contents.size(); i++) {
+                    Note currentNote = contents.get(i);
+                    if (currentNote.getNoteContent().equalsIgnoreCase(content)) {
+                        Toast.makeText(MainActivity.this, "Note not inserted; already exists", Toast.LENGTH_SHORT).show();
+                        canInsert = false;
+                        break;
+                    }
+                }
 
+                if (canInsert) {
+                    db.insertNote(content, stars);
+                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
+                }
 
                 db.close();
             }

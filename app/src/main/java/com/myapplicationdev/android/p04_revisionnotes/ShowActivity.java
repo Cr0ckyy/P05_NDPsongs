@@ -7,17 +7,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
 // todo: Done by Zizou
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {// TODO Implements ArrayView | by Myron
     ArrayList<Song> al;
     ArrayAdapter aa;
     ListView lv;
     Button btnShow;
+
+    // TODO Create array for spinner | by Myron
+    String[] year = { "1999", "2000", "2001"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,16 @@ public class ShowActivity extends AppCompatActivity {
             i.putExtra("song", song);
             startActivityForResult(i, 9);
         });
+
+        // TODO Show the spinner | by Myron
+        //Getting the instance of Spinner and applying OnItemSelectedListener on it
+        Spinner spin = (Spinner) findViewById(R.id.spYear);
+        spin.setOnItemSelectedListener(this);
+        //Creating the ArrayAdapter instance having the country list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,year);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
     }
 
     @Override
@@ -54,5 +69,16 @@ public class ShowActivity extends AppCompatActivity {
             aa = new SongAdapter(this, R.layout.row, al);
             lv.setAdapter(aa);
         }
+    }
+
+    // TODO Create override methods for spinner | by Myron
+    //Performing action onItemSelected and onNothing selected
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+        Toast.makeText(getApplicationContext(),year[position] , Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 }

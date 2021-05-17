@@ -18,4 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
+
+    <!-- TODO Create spinner element | by Myron -->
+    <Spinner
+        android:id="@+id/spYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -1,8 +1,8 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,71 +14,58 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-// Todo: MainActivity | by Myron
 public class MainActivity extends AppCompatActivity {
+    EditText etSongTitle, etSingers, etYear;
+    RadioGroup radioGroupStars;
+    Button btnInsert, btnShow;
+    ArrayList<Song> al;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnInsert;
-        Button btnShowList;
-        final EditText etNote;
-        final RadioGroup rg;
+        etSongTitle = findViewById(R.id.etSongTitle);
+        etSingers = findViewById(R.id.etSingers);
+        etYear = findViewById(R.id.etYear);
+        radioGroupStars = findViewById(R.id.radioGroupStars);
+        btnInsert = findViewById(R.id.btnInsert);
+        btnShow = findViewById(R.id.btnShow);
 
-        btnInsert = findViewById(R.id.buttonInsertNote);
-        btnShowList = findViewById(R.id.buttonShowList);
-        etNote = findViewById(R.id.editTextNote);
-        rg = findViewById(R.id.radioGroupStars);
+        btnInsert.setOnClickListener(v -> {
 
-        btnInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create the DBHelper object, passing in the
-                // activity's Context
-                DBHelper db = new DBHelper(MainActivity.this);
-                int stars = (rg.getCheckedRadioButtonId()) - 2131165315;
-                Boolean canInsert = true;
+            // TODO: getting values from RadioButton
+            int CheckedRadioButtonId = radioGroupStars.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = findViewById(CheckedRadioButtonId);
 
-                // Todo: Done by Zuhaili, simplified up by Shufang
-                // Todo: Prevent the user from entering an empty value in EditText.
-                // counting of editTextNote
-                int editTextNoteCount = etNote.getText().toString().trim().length();
-                if (editTextNoteCount == 0) {
-                    canInsert = false;
-                    Toast.makeText(MainActivity.this, "Not inserted; field is empty.", Toast.LENGTH_SHORT).show();
-                }
 
-                // Todo: Check if content is a duplicate | By Myron
-                String content = etNote.getText().toString();
-                ArrayList<Note> notes = db.getAllNotes();
-                for (int i = 0; i < notes.size(); i++) {
-                    Note currentNote = notes.get(i);
-                    String currentContent = currentNote.getNoteContent();
-                    if (currentContent.equalsIgnoreCase(content)) {
-                        canInsert = false;
-                        Toast.makeText(MainActivity.this, "Not inserted; already exists", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
+            // obtain data from the Song Form
+            String songTitle = etSongTitle.getText().toString();
+            String data1 = etSingers.getText().toString();
+            int data2 = Integer.parseInt(etYear.getText().toString());
+            int data3 = Integer.parseInt(selectedRadioButton.getText().toString());
+            DBHelper dbh = new DBHelper(MainActivity.this);
 
-                if (canInsert) {
-                    db.insertNote(content, stars);
-                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_SHORT).show();
-                }
-                db.close();
+
+
+            long inserted_id = dbh.insertSong(data, data1, data2, data3);
+            dbh.close();
+
+            if (inserted_id != -1) {
+                Toast.makeText(MainActivity.this, "Insert successful",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-
-        btnShowList.setOnClickListener(new View.OnClickListener() {
+        btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(MainActivity.this, SecondActivity.class);
-                MainActivity.this.startActivity(i);
+                Intent i = new Intent(MainActivity.this,
+                        ShowSong.class);
+                startActivity(i);
             }
         });
-
     }
+
 }
+

@@ -24,7 +24,7 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
     Button btnShow, btn5Stars;
 
     // TODO Create array for spinner | by Myron
-    String[] year = {};
+    ArrayList<Integer> arYears;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,14 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
 //        });
 
         // TODO Show the spinner | by Myron
+        // ArrayList to hold the years
+        arYears = new ArrayList<Integer>();
+        arYears.addAll(db.getYears());
         //Getting the instance of Spinner and applying OnItemSelectedListener on it
         Spinner spin = (Spinner) findViewById(R.id.spYear);
         spin.setOnItemSelectedListener(this);
         //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,year);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,arYears);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
@@ -91,7 +94,13 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
     //Performing action onItemSelected and onNothing selected
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-        Toast.makeText(getApplicationContext(),year[position] , Toast.LENGTH_LONG).show();
+        Integer selectedYear = arYears.get(position);
+        DBHelper db = new DBHelper(ShowActivity.this);
+        al.clear();
+        al.addAll(db.getSongsByYear(selectedYear));
+        db.close();
+
+        aa.notifyDataSetChanged();
     }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {

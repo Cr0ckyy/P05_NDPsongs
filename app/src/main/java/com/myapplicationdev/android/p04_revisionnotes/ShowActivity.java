@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+// todo: Done by Zizou
 public class ShowActivity extends AppCompatActivity {
     ArrayList<Song> al;
     ArrayAdapter aa;
@@ -32,16 +33,12 @@ public class ShowActivity extends AppCompatActivity {
         aa = new SongAdapter(this, R.layout.row, al);
         lv.setAdapter(aa);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int
-                    position, long identity) {
-                Song song = al.get(position);
-                Intent i = new Intent(ShowActivity.this,
-                        ModifyActivity.class);
-                i.putExtra("song", song);
-                startActivityForResult(i, 9);
-            }
+        lv.setOnItemClickListener((parent, view, position, identity) -> {
+            Song song = al.get(position);
+            Intent i = new Intent(ShowActivity.this,
+                    ModifyActivity.class);
+            i.putExtra("song", song);
+            startActivityForResult(i, 9);
         });
     }
 

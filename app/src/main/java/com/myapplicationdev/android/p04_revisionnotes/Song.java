@@ -1,7 +1,7 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
 import java.io.Serializable;
-
+// todo: Done by Shufang
 public class Song implements Serializable {
     private int id;
     private String title;

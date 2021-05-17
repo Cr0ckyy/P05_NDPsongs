@@ -7,7 +7,7 @@
     android:padding="10dp"
     tools:context="com.myapplicationdev.android.p04_revisionnotes.MainActivity">
 
-
+<!--    // todo: Done by Shufang-->
     <!--Todo: Song Title-->
     <TextView
         android:id="@+id/tvSongTitle"

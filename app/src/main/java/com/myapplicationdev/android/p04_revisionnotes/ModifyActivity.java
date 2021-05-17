@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+// todo: Done by Myron
 public class ModifyActivity extends AppCompatActivity {
 
     TextView tvSongId;
@@ -46,30 +46,22 @@ public class ModifyActivity extends AppCompatActivity {
         etSongTitle.setText(song.getTitle());
 
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int checking = radioGroupStars.getCheckedRadioButtonId();
-                RadioButton rbSelected = findViewById(checking);
-                int stars = Integer.parseInt(rbSelected.getText().toString());
-                DBHelper dbh = new DBHelper(ModifyActivity.this);
-                song.setYear(Integer.parseInt(etYear.getText().toString()));
-                song.setSingers(etSingers.getText().toString());
-                song.setTitle(etSongTitle.getText().toString());
-                song.setStars(stars);
+        btnCancel.setOnClickListener(view -> finish());
+        btnUpdate.setOnClickListener(view -> {
+            int checking = radioGroupStars.getCheckedRadioButtonId();
+            RadioButton rbSelected = findViewById(checking);
+            int stars = Integer.parseInt(rbSelected.getText().toString());
+            DBHelper dbh = new DBHelper(ModifyActivity.this);
+            song.setYear(Integer.parseInt(etYear.getText().toString()));
+            song.setSingers(etSingers.getText().toString());
+            song.setTitle(etSongTitle.getText().toString());
+            song.setStars(stars);
 
-                dbh.updateSong(song);
-                dbh.close();
-                Intent i = new Intent();
-                setResult(RESULT_OK, i);
-                finish();
-            }
+            dbh.updateSong(song);
+            dbh.close();
+            Intent i1 = new Intent();
+            setResult(RESULT_OK, i1);
+            finish();
         });
 
     }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
-
+    <!--    // todo: Done by zizou-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dp"

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".ShowActivity">
-
+    <!--    // todo: Done by Shufang-->
     <Button
         android:id="@+id/btnShow"
         android:layout_width="match_parent"

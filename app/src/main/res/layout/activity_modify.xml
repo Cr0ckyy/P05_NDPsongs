@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     tools:context="com.myapplicationdev.android.p04_revisionnotes.MainActivity">
-
+    <!--    // todo: Done by Shufang-->
     <!--Todo: Song ID-->
     <TextView
         android:layout_width="wrap_content"

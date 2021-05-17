@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+// todo: Done by Shufang
 public class MainActivity extends AppCompatActivity {
     EditText etSongTitle, etSingers, etYear;
     RadioGroup radioGroupStars;
@@ -29,40 +29,34 @@ public class MainActivity extends AppCompatActivity {
         btnInsert = findViewById(R.id.btnInsert);
         btnShow = findViewById(R.id.btnShow);
 
-        btnInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnInsert.setOnClickListener(v -> {
 
 
-                // TODO: obtained the retrieved data from the Song Form
-                String title = etSongTitle.getText().toString();
-                String singer = etSingers.getText().toString();
-                int year = Integer.parseInt(etYear.getText().toString());
+            // TODO: obtained the retrieved data from the Song Form
+            String title = etSongTitle.getText().toString();
+            String singer = etSingers.getText().toString();
+            int year = Integer.parseInt(etYear.getText().toString());
 
-                // obtain the star value
-                int checkedRadioButtonId = radioGroupStars.getCheckedRadioButtonId();
-                RadioButton selectedRadioButton = findViewById(checkedRadioButtonId);
-                int star = Integer.parseInt(selectedRadioButton.getText().toString());
+            // obtain the star value
+            int checkedRadioButtonId = radioGroupStars.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = findViewById(checkedRadioButtonId);
+            int star = Integer.parseInt(selectedRadioButton.getText().toString());
 
 
-                DBHelper dbh = new DBHelper(MainActivity.this);
-                long inserted_id = dbh.insertSong(title, singer, year, star);
-                dbh.close();
+            DBHelper dbh = new DBHelper(MainActivity.this);
+            long inserted_id = dbh.insertSong(title, singer, year, star);
+            dbh.close();
 
-                if (inserted_id != -1) {
-                    Toast.makeText(MainActivity.this, "Insert successful", Toast.LENGTH_SHORT).show();
+            if (inserted_id != -1) {
+                Toast.makeText(MainActivity.this, "Insert successful", Toast.LENGTH_SHORT).show();
 
-                }
             }
         });
-        btnShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnShow.setOnClickListener(v -> {
 
-                Intent intent = new Intent(MainActivity.this,
-                        com.myapplicationdev.android.p04_revisionnotes.ShowActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this,
+                    ShowActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+// todo: Done by Jun Kai
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "songs.db";
     private static final int DATABASE_VERSION = 1;

@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
+
+// todo: Done by Shufang
 public class SongAdapter extends ArrayAdapter<com.myapplicationdev.android.p04_revisionnotes.Song> {
     Context context;
     ArrayList<com.myapplicationdev.android.p04_revisionnotes.Song> songs;

@@ -115,4 +115,46 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return result;
     }
+
+    // TODO Methods to show by year| by Myron
+    public ArrayList<Integer> getYears() {
+        ArrayList<Integer> years = new ArrayList<Integer>();
+        String selectQuery = "SELECT " + COLUMN_YEAR + " FROM " + TABLE_SONG;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                if(! years.contains(cursor.getInt(0))){
+                    years.add(cursor.getInt(0));
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return years;
+    }
+    public ArrayList<Song> getSongsByYear(int filterYear) {
+        ArrayList<Song> songs = new ArrayList<Song>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns= {COLUMN_ID, COLUMN_TITLE, COLUMN_SINGERS, COLUMN_YEAR, COLUMN_STARS};
+        String condition = COLUMN_YEAR + " Like ?";
+        String[] args = { "%" +  filterYear + "%"};
+        Cursor cursor = db.query(TABLE_SONG, columns, condition, args,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String title = cursor.getString(1);
+                String singers = cursor.getString(2);
+                int year = cursor.getInt(3);
+                int stars = cursor.getInt(4);
+                Song song = new Song(title, singers, year, stars);
+                songs.add(song);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return songs;
+    }
 }

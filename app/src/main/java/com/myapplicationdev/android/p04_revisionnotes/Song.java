@@ -1,5 +1,5 @@
-
 package com.myapplicationdev.android.p04_revisionnotes;
+
 import java.io.Serializable;
 
 public class Song implements Serializable {

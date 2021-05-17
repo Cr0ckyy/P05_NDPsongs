@@ -23,7 +23,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createSongTableSql = "CREATE TABLE " + TABLE_SONG + "("
@@ -36,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.i("info", "created tables");
 
         //Dummy records, to be inserted when the database is created
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i< 4; i++) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID, "Data number " + i);
             values.put(COLUMN_TITLE, "Data number " + i);
@@ -55,7 +54,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("ALTER TABLE " + TABLE_SONG + " ADD COLUMN module_name TEXT ");
 
     }
-
     //Insert a new record.
     public long insertSong(String songTitle, String songSingers, int songYear, int songStars) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -67,13 +65,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_SONG, null, values);
         db.close();
-        Log.d("SQL Insert", "ID:" + result); //id returned, shouldn’t be -1
+        Log.d("SQL Insert","ID:"+ result); //id returned, shouldn’t be -1
         return result;
     }
-
     //Record retrieval from database table
-    public ArrayList<Song> getAllNotes() {
-        ArrayList<Song> notes = new ArrayList<Song>();
+    public ArrayList<com.myapplicationdev.android.p04_revisionnotes.Song> getAllNotes() {
+        ArrayList<com.myapplicationdev.android.p04_revisionnotes.Song> notes = new ArrayList<com.myapplicationdev.android.p04_revisionnotes.Song>();
         String selectQuery = "SELECT " + COLUMN_ID + ", "
                 + COLUMN_TITLE + ", "
                 + COLUMN_SINGERS + ", "
@@ -88,7 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 String nameContent = cursor.getString(2);
                 int yearContent = cursor.getInt(3);
                 int starContent = cursor.getInt(4);
-                Song song = new Song(songContent, nameContent, yearContent, starContent);
+                com.myapplicationdev.android.p04_revisionnotes.Song song = new com.myapplicationdev.android.p04_revisionnotes.Song(songContent, nameContent, yearContent, starContent);
                 notes.add(song);
             } while (cursor.moveToNext());
         }
@@ -96,21 +93,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return notes;
     }
-
-    public int updateSong(Song data) {
+    public int updateSong(com.myapplicationdev.android.p04_revisionnotes.Song data){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, data.getTitle());
-        values.put(COLUMN_SINGERS, data.getSingers());
+        values.put(COLUMN_SINGERS,  data.getSingers());
         values.put(COLUMN_YEAR, data.getYear());
-        values.put(COLUMN_STARS, data.getStars());
+        values.put(COLUMN_STARS,  data.getStars());
         String condition = COLUMN_ID + "= ?";
         String[] args = {String.valueOf(data.getId())};
         int result = db.update(TABLE_SONG, values, condition, args);
         db.close();
         return result;
     }
-
     public int deleteSong(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String condition = COLUMN_ID + "= ?";

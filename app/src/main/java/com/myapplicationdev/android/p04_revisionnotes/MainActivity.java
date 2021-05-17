@@ -1,6 +1,5 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     EditText etSongTitle, etSingers, etYear;
     RadioGroup radioGroupStars;
     Button btnInsert, btnShow;
-    ArrayList<Song> al;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,36 +29,41 @@ public class MainActivity extends AppCompatActivity {
         btnInsert = findViewById(R.id.btnInsert);
         btnShow = findViewById(R.id.btnShow);
 
-        btnInsert.setOnClickListener(v -> {
-
-            // TODO: getting values from RadioButton
-            int CheckedRadioButtonId = radioGroupStars.getCheckedRadioButtonId();
-            RadioButton selectedRadioButton = findViewById(CheckedRadioButtonId);
+        btnInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-            // obtain data from the Song Form
-            String songTitle = etSongTitle.getText().toString();
-            String singerName = etSingers.getText().toString();
-            int releasedYear = Integer.parseInt(etYear.getText().toString());
-            int starValue = Integer.parseInt(selectedRadioButton.getText().toString());
-            DBHelper dbh = new DBHelper(MainActivity.this);
+                // TODO: obtained the retrieved data from the Song Form
+                String title = etSongTitle.getText().toString();
+                String singer = etSingers.getText().toString();
+                int year = Integer.parseInt(etYear.getText().toString());
+
+                // obtain the star value
+                int checkedRadioButtonId = radioGroupStars.getCheckedRadioButtonId();
+                RadioButton selectedRadioButton = findViewById(checkedRadioButtonId);
+                int star = Integer.parseInt(selectedRadioButton.getText().toString());
 
 
-            long insertedId = dbh.insertSong(songTitle, singerName, releasedYear, starValue);
-            dbh.close();
+                DBHelper dbh = new DBHelper(MainActivity.this);
+                long inserted_id = dbh.insertSong(title, singer, year, star);
+                dbh.close();
 
-            if (insertedId != -1) {
-                Toast.makeText(MainActivity.this, "Insert successful", Toast.LENGTH_SHORT).show();
+                if (inserted_id != -1) {
+                    Toast.makeText(MainActivity.this, "Insert successful", Toast.LENGTH_SHORT).show();
 
+                }
             }
         });
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        btnShow.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, ShowActivity.class);
-            startActivity(i);
+                Intent intent = new Intent(MainActivity.this,
+                        com.myapplicationdev.android.p04_revisionnotes.ShowActivity.class);
+                startActivity(intent);
+            }
         });
-
-
     }
 
 }

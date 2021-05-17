@@ -1,51 +1,76 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
-import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.myapplicationdev.android.p04_revisionnotes.databinding.ActivityModifyBinding;
-
 public class ModifyActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityModifyBinding binding;
+    TextView tvSongId;
+    Song song;
+    EditText etSongTitle, etSingers, etYear;
+    Button btnUpdate, btnDelete, btnCancel;
+    RadioGroup radioGroupStars;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_modify);
 
-        binding = ActivityModifyBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        tvSongId = findViewById(R.id.tvSongId);
+        etSongTitle = findViewById(R.id.etSongTitle);
+        etSingers = findViewById(R.id.etSingers);
+        etYear = findViewById(R.id.etYear);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
+        btnCancel = findViewById(R.id.btnCancel);
+        radioGroupStars = findViewById(R.id.radioGroupStars);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_modify);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        Intent i = getIntent();
+        song = (Song) i.getSerializableExtra("song");
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        tvSongId.setText(song.getId() + "");
+        etYear.setText(song.getYear() + "");
+        etSingers.setText(song.getSingers());
+        etSongTitle.setText(song.getTitle());
+
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                finish();
             }
         });
-    }
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int checking = radioGroupStars.getCheckedRadioButtonId();
+                RadioButton rbSelected = findViewById(checking);
+                int stars = Integer.parseInt(rbSelected.getText().toString());
+                DBHelper dbh = new DBHelper(ModifyActivity.this);
+                song.setYear(Integer.parseInt(etYear.getText().toString()));
+                song.setSingers(etSingers.getText().toString());
+                song.setTitle(etSongTitle.getText().toString());
+                song.setStars(stars);
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_modify);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+                dbh.updateSong(song);
+                dbh.close();
+                Intent i = new Intent();
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
+
     }
 }

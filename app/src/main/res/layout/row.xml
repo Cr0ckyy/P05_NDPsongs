@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -36,34 +37,34 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView1star"
+            android:id="@+id/imageViewStar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star_big_off" />
 
         <ImageView
-            android:id="@+id/imageView2star"
+            android:id="@+id/imageViewStar2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star_big_off" />
 
         <ImageView
-            android:id="@+id/imageView3star"
+            android:id="@+id/imageViewStar3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star_big_off" />
 
         <ImageView
-            android:id="@+id/imageView4star"
+            android:id="@+id/imageViewStar4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star_big_off" />
 
         <ImageView
-            android:id="@+id/imageView5star"
+            android:id="@+id/imageViewStar5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star_big_off" />

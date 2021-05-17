@@ -22,7 +22,7 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
     Button btnShow;
 
     // TODO Create array for spinner | by Myron
-    String[] year = { "1999", "2000", "2001"};
+    String[] year = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

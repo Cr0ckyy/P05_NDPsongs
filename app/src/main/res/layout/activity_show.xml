@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".ShowActivity">
+
     <!--    // todo: Done by Shufang-->
     <Button
         android:id="@+id/btnShow"
@@ -13,15 +14,17 @@
         android:layout_height="wrap_content"
         android:text="Show All Songs With 5 Star" />
 
-    <ListView
-        android:id="@+id/lv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
 
     <!-- TODO Create spinner element | by Myron -->
     <Spinner
         android:id="@+id/spYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <!--    // todo: Done by Shufang-->
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 </LinearLayout>

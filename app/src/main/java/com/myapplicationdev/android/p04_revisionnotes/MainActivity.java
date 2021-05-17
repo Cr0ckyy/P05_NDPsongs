@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//
         etSongTitle = findViewById(R.id.etSongTitle);
         etSingers = findViewById(R.id.etSingers);
         etYear = findViewById(R.id.etYear);

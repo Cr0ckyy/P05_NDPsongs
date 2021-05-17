@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SINGERS = "singers";
     private static final String COLUMN_YEAR = "year";
     private static final String COLUMN_STARS = "stars";
-
+    //
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

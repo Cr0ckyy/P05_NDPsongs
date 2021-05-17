@@ -8,11 +8,6 @@
     tools:context=".ShowActivity">
 
     <!--    // todo: Done by Shufang-->
-    <Button
-        android:id="@+id/btnShow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Show All Songs With 5 Star" />
 
 
     <!-- TODO Create spinner element | by Myron -->

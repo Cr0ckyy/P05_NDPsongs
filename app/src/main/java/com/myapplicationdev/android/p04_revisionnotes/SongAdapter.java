@@ -34,21 +34,21 @@ public class SongAdapter extends ArrayAdapter<com.myapplicationdev.android.p04_r
         View rowView = inflater.inflate(resource, parent, false);
 
         //Match the UI components with Java variables
-        iv1 = rowView.findViewById(R.id.imageViewStar1);
-        iv2 = rowView.findViewById(R.id.imageViewStar2);
-        iv3 = rowView.findViewById(R.id.imageViewStar3);
-        iv4 = rowView.findViewById(R.id.imageViewStar4);
-        iv5 = rowView.findViewById(R.id.imageViewStar5);
+        iv1 = rowView.findViewById(R.id.imageView1star2);
+        iv2 = rowView.findViewById(R.id.imageView2star2);
+        iv3 = rowView.findViewById(R.id.imageView3star2);
+        iv4 = rowView.findViewById(R.id.imageView4star2);
+        iv5 = rowView.findViewById(R.id.imageView5star2);
 
-        tvYear = rowView.findViewById(R.id.tvYear);
-        tvTitle = rowView.findViewById(R.id.tvTitle);
-        tvSinger = rowView.findViewById(R.id.tvSinger);
+        tvYear = rowView.findViewById(R.id.tvYearSongs);
+        tvTitle = rowView.findViewById(R.id.tvSongName);
+        tvSinger = rowView.findViewById(R.id.tvArtist);
 
         com.myapplicationdev.android.p04_revisionnotes.Song song = songs.get(position);
         int stars = song.getStars();
 
         //Check if the property for starts >= 5, if so, "light" up the stars
-        tvYear.setText(song.getYear() + "");
+        tvYear.setText(song.getYear());
         tvTitle.setText(song.getTitle());
         tvSinger.setText(song.getSingers());
 

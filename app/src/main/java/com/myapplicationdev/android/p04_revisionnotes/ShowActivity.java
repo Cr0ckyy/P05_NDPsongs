@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,8 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
     ArrayList<Song> al;
     ArrayAdapter aa;
     ListView lv;
-    Button btnShow;
+    TextView tvYear, tvSong, tvArtist;
+    Button btnShow, btn5Stars;
 
     // TODO Create array for spinner | by Myron
     String[] year = {};
@@ -30,8 +32,15 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_show);
 
         btnShow = findViewById(R.id.btnShow);
+        btn5Stars = findViewById(R.id.btn5Stars);
+        tvYear = findViewById(R.id.tvYear);
+        tvSong = findViewById(R.id.tvSongName);
+        tvArtist = findViewById(R.id.tvArtist);
 
         lv = findViewById(R.id.lv);
+
+
+
         al = new ArrayList<>();
         DBHelper db = new DBHelper(ShowActivity.this);
         al = db.getAllNotes();
@@ -45,6 +54,13 @@ public class ShowActivity extends AppCompatActivity implements AdapterView.OnIte
             i.putExtra("song", song);
             startActivityForResult(i, 9);
         });
+
+//        btn5Stars.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         // TODO Show the spinner | by Myron
         //Getting the instance of Spinner and applying OnItemSelectedListener on it

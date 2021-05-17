@@ -9,15 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:label="@string/title_activity_main">
+        <activity
+            android:name=".ModifyActivity"
+            android:label="@string/title_activity_modify"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".showActivity"
+            android:label="@string/title_activity_show"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity" android:label="@string/title_activity_second"/>
-
+        <activity
+            android:name=".SecondActivity"
+            android:label="@string/title_activity_second" />
     </application>
 
 </manifest>

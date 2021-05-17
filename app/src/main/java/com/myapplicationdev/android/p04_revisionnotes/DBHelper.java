@@ -1,5 +1,6 @@
 package com.myapplicationdev.android.p04_revisionnotes;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,16 +11,14 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
-
-    //TODO Define the Database properties | by Myron
-    private static final String DATABASE_NAME = "Star";
+    private static final String DATABASE_NAME = "songs.db";
     private static final int DATABASE_VERSION = 1;
-
-    private static final String TABLE_NOTE = "Note";
+    private static final String TABLE_SONG = "song";
     private static final String COLUMN_ID = "_id";
-    private static final String COLUMN_NOTE_CONTENT = "noteContent";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_SINGERS = "singers";
+    private static final String COLUMN_YEAR = "year";
     private static final String COLUMN_STARS = "stars";
-
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,76 +26,70 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //TODO CREATE TABLE Note | by Myron
-
-        String createTableSql = "CREATE TABLE " + TABLE_NOTE + "("
+        String createSongTableSql = "CREATE TABLE " + TABLE_SONG + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NOTE_CONTENT + " TEXT,"
+                + COLUMN_TITLE + " TEXT,"
+                + COLUMN_SINGERS + " TEXT,"
+                + COLUMN_YEAR + " INTEGER,"
                 + COLUMN_STARS + " INTEGER )";
-        db.execSQL(createTableSql);
+        db.execSQL(createSongTableSql);
         Log.i("info", "created tables");
 
-        // By Myron
-        //	The SQL Statement:
-        //		CREATE TABLE `Note` (
-        //	`_id`	INTEGER PRIMARY KEY AUTOINCREMENT,
-        //	`noteContent`	TEXT,
-        //	`stars`	INTEGER
-        //);
+        //Dummy records, to be inserted when the database is created
+        for (int i = 0; i < 4; i++) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_ID, "Data number " + i);
+            values.put(COLUMN_TITLE, "Data number " + i);
+            values.put(COLUMN_SINGERS, "Data number " + i);
+            values.put(COLUMN_YEAR, "Data number " + i);
+            values.put(COLUMN_STARS, "Data number " + i);
+            db.insert(TABLE_SONG, null, values);
+        }
+        Log.i("info", "dummy records inserted");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTE);
-        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SONG);
+        db.execSQL("ALTER TABLE " + TABLE_SONG + " ADD COLUMN module_name TEXT ");
+
     }
 
-    //TODO: Done By Jun Kai
-    //TODO: insertNote
-    public void insertNote(String noteContent, int stars) {
-
-        //TODO insert the data into the database
-        // Get an instance of the database for writing
+    //Insert a new record.
+    public long insertSong(String songTitle, String songSingers, int songYear, int songStars) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // We use ContentValues object to store the values for
-        //  the db operation
         ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, songTitle);
+        values.put(COLUMN_SINGERS, songSingers);
+        values.put(COLUMN_YEAR, songYear);
+        values.put(COLUMN_STARS, songStars);
 
-        // Store the column name as key and the description as value
-        values.put(COLUMN_NOTE_CONTENT, noteContent);
-
-        // Store the column name as key and the date as value
-        values.put(COLUMN_STARS, stars);
-
-        // Insert the row into the TABLE_TASK
-        db.insert(TABLE_NOTE, null, values);
-
-        // Close the database connection
+        long result = db.insert(TABLE_SONG, null, values);
         db.close();
+        Log.d("SQL Insert", "ID:" + result); //id returned, shouldn’t be -1
+        return result;
     }
 
-    //Todo: Done By Jun Kai
-    // Todo: getAllnotes ArrayList
-    public ArrayList<Note> getAllNotes() {
-
-        //TODO return records in Java objects
-        ArrayList<Note> notes = new ArrayList<Note>();
+    //Record retrieval from database table
+    public ArrayList<Song> getAllNotes() {
+        ArrayList<Song> notes = new ArrayList<Song>();
         String selectQuery = "SELECT " + COLUMN_ID + ", "
-                + COLUMN_NOTE_CONTENT + ", "
+                + COLUMN_TITLE + ", "
+                + COLUMN_SINGERS + ", "
+                + COLUMN_YEAR + ", "
                 + COLUMN_STARS
-                + " FROM " + TABLE_NOTE;
-
+                + " FROM " + TABLE_SONG;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(0);
-                String noteContent = cursor.getString(1);
-                int stars = cursor.getInt(2);
-                Note obj = new Note(id, noteContent, stars);
-                notes.add(obj);
+                String songContent = cursor.getString(1);
+                String nameContent = cursor.getString(2);
+                int yearContent = cursor.getInt(3);
+                int starContent = cursor.getInt(4);
+                Song song = new Song(songContent, nameContent, yearContent, starContent);
+                notes.add(song);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -104,36 +97,26 @@ public class DBHelper extends SQLiteOpenHelper {
         return notes;
     }
 
-    //TODO: Done By Jun Kai
-    //TODO: getNoteContent ArrayList
-    public ArrayList<String> getNoteContent() {
-        //TODO return records in Strings
-
-        // Create an ArrayList that holds String objects
-        ArrayList<String> notes = new ArrayList<String>();
-
-        // Select all the notes' content
-        String selectQuery = "";
-
-        // Get the instance of database to read
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // Run the SQL query and get back the Cursor object
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // moveToFirst() moves to first row
-        if (cursor.moveToFirst()) {
-
-            // Loop while moveToNext() points to next row and returns true;
-            // moveToNext() returns false when no more next row to move to
-            do {
-                notes.add(cursor.getString(0));
-            } while (cursor.moveToNext());
-        }
-        // Close connection
-        cursor.close();
+    public int updateSong(Song data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, data.getTitle());
+        values.put(COLUMN_SINGERS, data.getSingers());
+        values.put(COLUMN_YEAR, data.getYear());
+        values.put(COLUMN_STARS, data.getStars());
+        String condition = COLUMN_ID + "= ?";
+        String[] args = {String.valueOf(data.getId())};
+        int result = db.update(TABLE_SONG, values, condition, args);
         db.close();
+        return result;
+    }
 
-        return notes;
+    public int deleteSong(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String condition = COLUMN_ID + "= ?";
+        String[] args = {String.valueOf(id)};
+        int result = db.delete(TABLE_SONG, condition, args);
+        db.close();
+        return result;
     }
 }

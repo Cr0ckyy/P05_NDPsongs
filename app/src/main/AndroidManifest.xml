@@ -14,6 +14,10 @@
             android:label="@string/title_activity_modify"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".ShowActivity"
+            android:label="@string/title_activity_show"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>

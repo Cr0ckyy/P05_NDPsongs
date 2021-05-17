@@ -9,7 +9,7 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="55dp"
-        app:srcCompat="@drawable/ic_library_music" />
+        android:background="@drawable/ic_library_music"  /> <!-- music icon file added and this line changed by Myron -->
 
     <LinearLayout
         android:layout_width="201dp"
